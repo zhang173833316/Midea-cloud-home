@@ -1,52 +1,217 @@
-# T0x09设备类型映射配置文件
-# 定义了美的智能门锁在Home Assistant中的表示方式和控制逻辑
+from ..core.device_map import MideaDeviceProperties, MideaDeviceProperty, MideaDeviceEntityConfig
 
-# 导入Home Assistant相关常量和设备类
-from homeassistant.const import Platform, UnitOfTemperature, UnitOfVolume, UnitOfTime, PERCENTAGE, PRECISION_HALVES, \
-    UnitOfEnergy, UnitOfPower, PRECISION_WHOLE
-from homeassistant.components.sensor import SensorStateClass, SensorDeviceClass
-from homeassistant.components.binary_sensor import BinarySensorDeviceClass
-from homeassistant.components.lock import LockState
-
-# 设备映射配置字典
-DEVICE_MAPPING = {
-    "default": {
-        # 控制选项映射，定义了设备可以执行的操作
-        "rationale": ["unlock", "lock"],
-        # 查询命令列表，用于获取设备状态
-        "queries": [{}],
-        # 集中式控制功能列表
-        "centralized": [],
-        # Home Assistant实体映射配置
-        "entities": {
-            Platform.LOCK: {
-                "door_lock": {
-                    # 门锁设备类定义
-                    "device_class": LockState,
-                    # 门锁的控制选项映射
-                    "rationale": ['unlock', 'lock']
-                }
-            },
-            Platform.SENSOR: {
-                "battery_level": {
-                    # 电池电量传感器配置
-                    "device_class": SensorDeviceClass.BATTERY,
-                    "unit_of_measurement": PERCENTAGE,
-                    "state_class": SensorStateClass.MEASUREMENT
-                }
-            },
-            Platform.BINARY_SENSOR: {
-                "door_status": {
-                    # 门状态二进制传感器配置
-                    "device_class": BinarySensorDeviceClass.DOOR,
-                    "rationale": ['closed', 'open']
-                },
-                "lock_status": {
-                    # 锁状态二进制传感器配置
-                    "device_class": BinarySensorDeviceClass.LOCK,
-                    "rationale": ['locked', 'unlocked']
-                }
-            }
-        }
-    }
-}
+# 重新定义0x09类型设备的属性映射（智能门锁）
+DEVICE_MAPPING_0x09 = MideaDeviceProperties(
+    name="Smart Door Lock",
+    entity_configs=[
+        # 开锁方式
+        MideaDeviceEntityConfig(
+            property=MideaDeviceProperty(
+                name="unlock_mode",
+                desc="Unlock Mode",
+                readable=True,
+                writable=True,
+                visible=True,
+                value_range=[0, 1, 2, 3, 4, 5]
+            ),
+            platform="select",
+            entity_key="unlock_mode"
+        ),
+        
+        # 当前状态
+        MideaDeviceEntityConfig(
+            property=MideaDeviceProperty(
+                name="current_status",
+                desc="Current Status",
+                readable=True,
+                writable=False,
+                visible=True,
+                value_range=None
+            ),
+            platform="sensor",
+            entity_key="current_status"
+        ),
+        
+        # 目标开锁方式
+        MideaDeviceEntityConfig(
+            property=MideaDeviceProperty(
+                name="target_unlock_method",
+                desc="Target Unlock Method",
+                readable=True,
+                writable=True,
+                visible=True,
+                value_range=[1, 10]
+            ),
+            platform="number",
+            entity_key="target_unlock_method"
+        ),
+        
+        # 门锁状态
+        MideaDeviceEntityConfig(
+            property=MideaDeviceProperty(
+                name="lock_state",
+                desc="Lock State",
+                readable=True,
+                writable=False,
+                visible=True,
+                value_range=None
+            ),
+            platform="binary_sensor",
+            entity_key="lock_state"
+        ),
+        
+        # 开锁记录
+        MideaDeviceEntityConfig(
+            property=MideaDeviceProperty(
+                name="unlock_record",
+                desc="Unlock Record",
+                readable=True,
+                writable=False,
+                visible=True,
+                value_range=None
+            ),
+            platform="binary_sensor",
+            entity_key="unlock_record"
+        ),
+        
+        # 电池状态
+        MideaDeviceEntityConfig(
+            property=MideaDeviceProperty(
+                name="battery_state",
+                desc="Battery State",
+                readable=True,
+                writable=False,
+                visible=True,
+                value_range=None
+            ),
+            platform="binary_sensor",
+            entity_key="battery_state"
+        ),
+        
+        # 设备在线状态
+        MideaDeviceEntityConfig(
+            property=MideaDeviceProperty(
+                name="device_online",
+                desc="Device Online",
+                readable=True,
+                writable=False,
+                visible=True,
+                value_range=None
+            ),
+            platform="binary_sensor",
+            entity_key="device_online"
+        ),
+        
+        # 错误代码
+        MideaDeviceEntityConfig(
+            property=MideaDeviceProperty(
+                name="error_code",
+                desc="Error Code",
+                readable=True,
+                writable=False,
+                visible=True,
+                value_range=None
+            ),
+            platform="sensor",
+            entity_key="error_code"
+        ),
+        
+        # 自动锁定功能开关
+        MideaDeviceEntityConfig(
+            property=MideaDeviceProperty(
+                name="auto_lock",
+                desc="Auto Lock",
+                readable=True,
+                writable=True,
+                visible=True,
+                value_range=[0, 1]
+            ),
+            platform="switch",
+            entity_key="auto_lock"
+        ),
+        
+        # 防撬报警状态
+        MideaDeviceEntityConfig(
+            property=MideaDeviceProperty(
+                name="tamper_alarm",
+                desc="Tamper Alarm",
+                readable=True,
+                writable=False,
+                visible=True,
+                value_range=None
+            ),
+            platform="binary_sensor",
+            entity_key="tamper_alarm"
+        ),
+        
+        # 临时密码设定
+        MideaDeviceEntityConfig(
+            property=MideaDeviceProperty(
+                name="temp_password_setting",
+                desc="Temporary Password Setting",
+                readable=True,
+                writable=True,
+                visible=True,
+                value_range=[1000, 999999]
+            ),
+            platform="number",
+            entity_key="temp_password_setting"
+        ),
+        
+        # 指纹识别灵敏度
+        MideaDeviceEntityConfig(
+            property=MideaDeviceProperty(
+                name="fingerprint_sensitivity",
+                desc="Fingerprint Sensitivity",
+                readable=True,
+                writable=True,
+                visible=True,
+                value_range=[1, 10]
+            ),
+            platform="number",
+            entity_key="fingerprint_sensitivity"
+        ),
+        
+        # 剩余电量百分比
+        MideaDeviceEntityConfig(
+            property=MideaDeviceProperty(
+                name="battery_level",
+                desc="Battery Level",
+                readable=True,
+                writable=False,
+                visible=True,
+                value_range=[0, 100]
+            ),
+            platform="sensor",
+            entity_key="battery_level"
+        ),
+        
+        # 儿童锁状态
+        MideaDeviceEntityConfig(
+            property=MideaDeviceProperty(
+                name="child_lock",
+                desc="Child Lock",
+                readable=True,
+                writable=True,
+                visible=True,
+                value_range=[0, 1]
+            ),
+            platform="switch",
+            entity_key="child_lock"
+        ),
+        
+        # 多重验证设置
+        MideaDeviceEntityConfig(
+            property=MideaDeviceProperty(
+                name="multi_auth",
+                desc="Multi-factor Authentication",
+                readable=True,
+                writable=True,
+                visible=True,
+                value_range=[0, 1]
+            ),
+            platform="switch",
+            entity_key="multi_auth"
+        )
+    ]
+)
