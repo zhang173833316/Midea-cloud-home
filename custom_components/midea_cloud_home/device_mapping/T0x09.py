@@ -61,32 +61,8 @@ DEVICE_MAPPING_0x09 = MideaDeviceProperties(
         ),
         
         # 开锁记录
-        MideaDeviceEntityConfig(
-            property=MideaDeviceProperty(
-                name="unlock_record",
-                desc="Unlock Record",
-                readable=True,
-                writable=False,
-                visible=True,
-                value_range=None
-            ),
-            platform="binary_sensor",
-            entity_key="unlock_record"
-        ),
         
         # 电池状态
-        MideaDeviceEntityConfig(
-            property=MideaDeviceProperty(
-                name="battery_state",
-                desc="Battery State",
-                readable=True,
-                writable=False,
-                visible=True,
-                value_range=None
-            ),
-            platform="binary_sensor",
-            entity_key="battery_state"
-        ),
         
         # 设备在线状态
         MideaDeviceEntityConfig(
@@ -183,7 +159,9 @@ DEVICE_MAPPING_0x09 = MideaDeviceProperties(
                 value_range=[0, 100]
             ),
             platform="sensor",
-            entity_key="battery_level"
+            entity_key="battery_level",
+            device_class="battery",
+            unit_of_measurement="%"
         ),
         
         # 儿童锁状态
