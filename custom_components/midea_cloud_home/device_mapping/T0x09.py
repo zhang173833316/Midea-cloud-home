@@ -1,7 +1,7 @@
 from ..core.device_map import MideaDeviceProperties, MideaDeviceProperty, MideaDeviceEntityConfig
 
 # 重新定义0x09类型设备的属性映射（智能门锁）
-DEVICE_MAPPING_0x09 = MideaDeviceProperties(
+DEVICE_MAPPING = MideaDeviceProperties(
     name="Smart Door Lock",
     entity_configs=[
         # 开锁方式
@@ -29,7 +29,8 @@ DEVICE_MAPPING_0x09 = MideaDeviceProperties(
                 value_range=None
             ),
             platform="sensor",
-            entity_key="current_status"
+            entity_key="current_status",
+            device_class="enum"
         ),
         
         # 目标开锁方式
@@ -54,15 +55,28 @@ DEVICE_MAPPING_0x09 = MideaDeviceProperties(
                 readable=True,
                 writable=False,
                 visible=True,
-                value_range=None
+                value_range=[0, 1]
             ),
             platform="binary_sensor",
-            entity_key="lock_state"
+            entity_key="lock_state",
+            device_class="lock"
         ),
         
-        # 开锁记录
-        
         # 电池状态
+        MideaDeviceEntityConfig(
+            property=MideaDeviceProperty(
+                name="battery_level",
+                desc="Battery Level",
+                readable=True,
+                writable=False,
+                visible=True,
+                value_range=[0, 100]
+            ),
+            platform="sensor",
+            entity_key="battery_level",
+            device_class="battery",
+            unit_of_measurement="%"
+        ),
         
         # 设备在线状态
         MideaDeviceEntityConfig(
@@ -72,10 +86,11 @@ DEVICE_MAPPING_0x09 = MideaDeviceProperties(
                 readable=True,
                 writable=False,
                 visible=True,
-                value_range=None
+                value_range=[0, 1]
             ),
             platform="binary_sensor",
-            entity_key="device_online"
+            entity_key="device_online",
+            device_class="connectivity"
         ),
         
         # 错误代码
@@ -89,7 +104,8 @@ DEVICE_MAPPING_0x09 = MideaDeviceProperties(
                 value_range=None
             ),
             platform="sensor",
-            entity_key="error_code"
+            entity_key="error_code",
+            device_class="enum"
         ),
         
         # 自动锁定功能开关
@@ -114,10 +130,11 @@ DEVICE_MAPPING_0x09 = MideaDeviceProperties(
                 readable=True,
                 writable=False,
                 visible=True,
-                value_range=None
+                value_range=[0, 1]
             ),
             platform="binary_sensor",
-            entity_key="tamper_alarm"
+            entity_key="tamper_alarm",
+            device_class="tamper"
         ),
         
         # 临时密码设定
@@ -146,22 +163,6 @@ DEVICE_MAPPING_0x09 = MideaDeviceProperties(
             ),
             platform="number",
             entity_key="fingerprint_sensitivity"
-        ),
-        
-        # 剩余电量百分比
-        MideaDeviceEntityConfig(
-            property=MideaDeviceProperty(
-                name="battery_level",
-                desc="Battery Level",
-                readable=True,
-                writable=False,
-                visible=True,
-                value_range=[0, 100]
-            ),
-            platform="sensor",
-            entity_key="battery_level",
-            device_class="battery",
-            unit_of_measurement="%"
         ),
         
         # 儿童锁状态
