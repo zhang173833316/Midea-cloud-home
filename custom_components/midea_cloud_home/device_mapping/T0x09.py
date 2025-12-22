@@ -1,196 +1,71 @@
-from ..core.device_map import MideaDeviceProperties, MideaDeviceProperty, MideaDeviceEntityConfig
+from homeassistant.const import Platform, UnitOfTemperature, UnitOfVolume, UnitOfTime, PERCENTAGE, PRECISION_HALVES, \
+    UnitOfEnergy, UnitOfPower, PRECISION_WHOLE
+from homeassistant.components.sensor import SensorStateClass, SensorDeviceClass
+from homeassistant.components.binary_sensor import BinarySensorDeviceClass
+from homeassistant.components.switch import SwitchDeviceClass
 
-# 重新定义0x09类型设备的属性映射（智能门锁）
-DEVICE_MAPPING = MideaDeviceProperties(
-    name="Smart Door Lock",
-    entity_configs=[
-        # 开锁方式
-        MideaDeviceEntityConfig(
-            property=MideaDeviceProperty(
-                name="unlock_mode",
-                desc="Unlock Mode",
-                readable=True,
-                writable=True,
-                visible=True,
-                value_range=[0, 1, 2, 3, 4, 5]
-            ),
-            platform="select",
-            entity_key="unlock_mode"
-        ),
+DEVICE_MAPPING = {
+    "T0x09": {  # 门锁的设备类型编码
+        "name": "美的智能门锁",
+        "manufacturer": "Midea",
+        "model": "BF530-S3B",
+        "rationale": "智能门锁，支持远程锁定/解锁、电池监控等功能",
         
-        # 当前状态
-        MideaDeviceEntityConfig(
-            property=MideaDeviceProperty(
-                name="current_status",
-                desc="Current Status",
-                readable=True,
-                writable=False,
-                visible=True,
-                value_range=None
-            ),
-            platform="sensor",
-            entity_key="current_status",
-            device_class="enum"
-        ),
-        
-        # 目标开锁方式
-        MideaDeviceEntityConfig(
-            property=MideaDeviceProperty(
-                name="target_unlock_method",
-                desc="Target Unlock Method",
-                readable=True,
-                writable=True,
-                visible=True,
-                value_range=[1, 10]
-            ),
-            platform="number",
-            entity_key="target_unlock_method"
-        ),
-        
-        # 门锁状态
-        MideaDeviceEntityConfig(
-            property=MideaDeviceProperty(
-                name="lock_state",
-                desc="Lock State",
-                readable=True,
-                writable=False,
-                visible=True,
-                value_range=[0, 1]
-            ),
-            platform="binary_sensor",
-            entity_key="lock_state",
-            device_class="lock"
-        ),
-        
-        # 电池状态
-        MideaDeviceEntityConfig(
-            property=MideaDeviceProperty(
-                name="battery_level",
-                desc="Battery Level",
-                readable=True,
-                writable=False,
-                visible=True,
-                value_range=[0, 100]
-            ),
-            platform="sensor",
-            entity_key="battery_level",
-            device_class="battery",
-            unit_of_measurement="%"
-        ),
-        
-        # 设备在线状态
-        MideaDeviceEntityConfig(
-            property=MideaDeviceProperty(
-                name="device_online",
-                desc="Device Online",
-                readable=True,
-                writable=False,
-                visible=True,
-                value_range=[0, 1]
-            ),
-            platform="binary_sensor",
-            entity_key="device_online",
-            device_class="connectivity"
-        ),
-        
-        # 错误代码
-        MideaDeviceEntityConfig(
-            property=MideaDeviceProperty(
-                name="error_code",
-                desc="Error Code",
-                readable=True,
-                writable=False,
-                visible=True,
-                value_range=None
-            ),
-            platform="sensor",
-            entity_key="error_code",
-            device_class="enum"
-        ),
-        
-        # 自动锁定功能开关
-        MideaDeviceEntityConfig(
-            property=MideaDeviceProperty(
-                name="auto_lock",
-                desc="Auto Lock",
-                readable=True,
-                writable=True,
-                visible=True,
-                value_range=[0, 1]
-            ),
-            platform="switch",
-            entity_key="auto_lock"
-        ),
-        
-        # 防撬报警状态
-        MideaDeviceEntityConfig(
-            property=MideaDeviceProperty(
-                name="tamper_alarm",
-                desc="Tamper Alarm",
-                readable=True,
-                writable=False,
-                visible=True,
-                value_range=[0, 1]
-            ),
-            platform="binary_sensor",
-            entity_key="tamper_alarm",
-            device_class="tamper"
-        ),
-        
-        # 临时密码设定
-        MideaDeviceEntityConfig(
-            property=MideaDeviceProperty(
-                name="temp_password_setting",
-                desc="Temporary Password Setting",
-                readable=True,
-                writable=True,
-                visible=True,
-                value_range=[1000, 999999]
-            ),
-            platform="number",
-            entity_key="temp_password_setting"
-        ),
-        
-        # 指纹识别灵敏度
-        MideaDeviceEntityConfig(
-            property=MideaDeviceProperty(
-                name="fingerprint_sensitivity",
-                desc="Fingerprint Sensitivity",
-                readable=True,
-                writable=True,
-                visible=True,
-                value_range=[1, 10]
-            ),
-            platform="number",
-            entity_key="fingerprint_sensitivity"
-        ),
-        
-        # 儿童锁状态
-        MideaDeviceEntityConfig(
-            property=MideaDeviceProperty(
-                name="child_lock",
-                desc="Child Lock",
-                readable=True,
-                writable=True,
-                visible=True,
-                value_range=[0, 1]
-            ),
-            platform="switch",
-            entity_key="child_lock"
-        ),
-        
-        # 多重验证设置
-        MideaDeviceEntityConfig(
-            property=MideaDeviceProperty(
-                name="multi_auth",
-                desc="Multi-factor Authentication",
-                readable=True,
-                writable=True,
-                visible=True,
-                value_range=[0, 1]
-            ),
-            platform="switch",
-            entity_key="multi_auth"
-        )
-    ]
-)
+        # 传感器实体配置
+        "entities": {
+            "sensor": {
+                "connectivity": {  # 连通性传感器
+                    "name": "连通性",
+                    "icon": "mdi:wifi",
+                    "state_class": "measurement",
+                    "native_unit_of_measurement": None,
+                    "device_class": None,
+                    "value_parser": lambda data: "在线" if data.get("online", True) else "离线"
+                },
+                "battery": {  # 电池电量传感器
+                    "name": "电池电量",
+                    "icon": "mdi:battery",
+                    "state_class": "measurement",
+                    "native_unit_of_measurement": "%",
+                    "device_class": "battery",
+                    "value_parser": lambda data: data.get("battery", 100)
+                },
+                "signal_strength": {  # 信号强度传感器
+                    "name": "信号强度",
+                    "icon": "mdi:wifi-strength-4",
+                    "state_class": "measurement",
+                    "native_unit_of_measurement": "dBm",
+                    "device_class": "signal_strength",
+                    "value_parser": lambda data: data.get("rssi", -50)
+                }
+            },
+            
+            # 锁实体配置
+            "lock": {
+                "main_lock": {  # 主锁实体
+                    "name": "智能门锁",
+                    "icon": "mdi:door-closed-lock",
+                    "value_parser": lambda data: "locked" if data.get("lock_state") == 1 else "unlocked"
+                }
+            },
+            
+            # 按钮实体配置
+            "button": {
+                "remote_unlock": {  # 远程开锁按钮
+                    "name": "远程开锁",
+                    "icon": "mdi:key-wireless",
+                    "device_class": "restart"
+                },
+                "lock_action": {  # 锁定按钮
+                    "name": "锁定门锁",
+                    "icon": "mdi:lock",
+                    "device_class": "lock"
+                },
+                "unlock_action": {  # 解锁按钮
+                    "name": "解锁门锁", 
+                    "icon": "mdi:lock-open",
+                    "device_class": "lock"
+                }
+            },
+            
+}}}

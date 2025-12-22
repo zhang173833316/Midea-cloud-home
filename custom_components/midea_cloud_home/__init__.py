@@ -373,12 +373,9 @@ async def async_setup_entry(hass: HomeAssistant, config_entry: ConfigEntry):
                                 pass
 
                             coordinator = MideaDataUpdateCoordinator(hass, config_entry, device, cloud=cloud)
+                            hass.async_create_task(async_load_platform(hass, "lock", DOMAIN, {}, entry))  # 锁实体
                             # 后台刷新，避免初始化阻塞
                             hass.async_create_task(coordinator.async_config_entry_first_refresh())
-                            # 加载锁平台（新增）
-                            hass.async_create_task(async_load_platform(hass, "lock", DOMAIN, {}, entry))
-                            # 加载按钮平台（新增）
-                            hass.async_create_task(async_load_platform(hass, "button", DOMAIN, {}, entry))
                             bucket["device_list"][appliance_code] = info
                             bucket["coordinator_map"][appliance_code] = coordinator
                         except Exception as e:

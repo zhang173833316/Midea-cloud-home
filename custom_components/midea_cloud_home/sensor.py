@@ -25,9 +25,6 @@ async def async_setup_entry(
     devs = []
     for device_id, info in device_list.items():
         device_type = info.get("type")
-        if device_type == "lock" or "BF530" in model:
-        # 添加电池传感器（示例）
-        new_entities.append(MideaLockBatterySensor(coordinator, device_id, device_info))
         sn8 = info.get("sn8")
         config = await load_device_config(hass, device_type, sn8) or {}
         entities_cfg = (config.get("entities") or {}).get(Platform.SENSOR, {})
@@ -89,25 +86,3 @@ class MideaSensorEntity(MideaEntity, SensorEntity):
                 return value
                 
         return value
-
-class MideaLockBatterySensor(CoordinatorEntity, SensorEntity):
-    """美的门锁电池电量传感器。"""
-    _attr_has_entity_name = True
-    _attr_native_unit_of_measurement = "%"  # 单位：百分比
-    _attr_device_class = "battery"  # 设备类型（前端显示电池图标）
-
-    def __init__(self, coordinator, device_id, device_info):
-        super().__init__(coordinator)
-        self._device_id = device_id
-        self._attr_unique_id = f"{device_id}_battery"
-        self._attr_name = "电池电量"
-        self._attr_device_info = {  # 关联门锁设备
-            "identifiers": {(DOMAIN, device_id)},
-            "name": device_info.get("name", "美的智能门锁"),
-        }
-
-    @property
-    def native_value(self) -> int | None:
-        """返回电池电量（0-100%）。"""
-        device_data = self.coordinator.data.get(self._device_id, {})
-        return device_data.get("battery_level")  # 假设API返回电池电量
