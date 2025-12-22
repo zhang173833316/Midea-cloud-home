@@ -26,6 +26,9 @@ async def async_setup_entry(
     devs = []
     for device_id, info in device_list.items():
         device_type = info.get("type")
+        if device_type == "lock" or "BF530" in model:
+        # 添加“远程开锁”按钮
+        new_entities.append(MideaRemoteUnlockButton(coordinator, device_id, device_info))
         sn8 = info.get("sn8")
         config = await load_device_config(hass, device_type, sn8) or {}
         entities_cfg = (config.get("entities") or {}).get(Platform.BUTTON, {})
@@ -37,6 +40,8 @@ async def async_setup_entry(
             devs.append(MideaButtonEntity(
                 coordinator, device, manufacturer, rationale, entity_key, ecfg
             ))
+    if new_entities:
+    async_add_entities(new_entities)
     async_add_entities(devs)
 
 
@@ -97,3 +102,25 @@ class MideaButtonEntity(MideaEntity, ButtonEntity):
             # 对于其他命令，可以通过 coordinator 发送
             await self.coordinator.async_send_command(0, command)
 
+class MideaRemoteUnlockButton(CoordinatorEntity, ButtonEntity):
+    """远程开锁按钮。"""
+    _attr_has_entity_name = True
+    _attr_device_class = "restart"  # 图标（可选）
+    
+    def __init__(self, coordinator, device_id, device_info):
+        super().__init__(coordinator)
+        self._device_id = device_id
+        self._attr_unique_id = f"{device_id}_remote_unlock"
+        self._attr_name = "远程开锁"
+        self._attr_device_info = {
+            "identifiers": {(DOMAIN, device_id)},
+            "name": device_info.get("name", "美的智能门锁"),
+        }
+    
+    async def async_press(self) -> None:
+        """按下按钮时执行远程开锁（调用API）。"""
+        _LOGGER.info(f"远程开锁：{self._device_id}")
+        # await self.coordinator.api.remote_unlock(self._device_id)  # 替换为你的API方法
+        import asyncio
+        await asyncio.sleep(1)
+        await self.coordinator.async_request_refresh()  # 刷新状态
