@@ -1,4 +1,4 @@
-DOMAIN = "midea_cloud_home"
+DOMAIN = "midea_auto_cloud"
 STORAGE_PATH = f".storage/{DOMAIN}/lua"
 STORAGE_PLUGIN_PATH = f".storage/{DOMAIN}/plugin"
 CONFIG_PATH = f".storage/{DOMAIN}/config"
