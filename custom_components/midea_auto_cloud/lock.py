@@ -1,4 +1,4 @@
-from homeassistant.components.lock import LockEntity, LockDeviceClass
+from homeassistant.components.lock import LockEntity
 from homeassistant.const import Platform
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
@@ -103,7 +103,7 @@ class MideaLockEntity(MideaEntity, LockEntity):
     @property
     def device_class(self):
         """Return the device class."""
-        return self._config.get("device_class", LockDeviceClass.LOCK)
+        return self._config.get("device_class", "lock")
 
     @property
     def entity_id_suffix(self) -> str:
