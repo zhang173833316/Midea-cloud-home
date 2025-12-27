@@ -61,7 +61,8 @@ PLATFORMS: list[Platform] = [
     Platform.LIGHT,
     Platform.HUMIDIFIER,
     Platform.NUMBER,
-    Platform.BUTTON
+    Platform.BUTTON,
+    Platform.LOCK
 ]
 
 async def import_module_async(module_name):
