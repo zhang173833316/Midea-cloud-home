@@ -61,24 +61,24 @@ class MideaButtonEntity(MideaEntity, ButtonEntity):
 
     async def async_press(self) -> None:
         """Handle the button press."""
-        # 从配置中获取要执行的命令或操�?
+        # 从配置中获取要执行的命令或操作
         command = self._config.get("command")
         attribute = self._config.get("attribute", self._entity_key)
         value = self._config.get("value")
         
-        # 判断是否为中央空调设备（T0x21�?
+        # 判断是否为中央空调设备（T0x21）
         is_central_ac = self._device.device_type == 0x21 if self._device else False
         
         if command:
             # 如果配置中指定了命令，执行该命令
             if isinstance(command, dict):
-                # 如果是字典，可能需要发送多个属�?
+                # 如果是字典，可能需要发送多个属性
                 await self.async_set_attributes(command)
             elif isinstance(command, str):
                 # 如果是字符串，可能是特殊命令类型
                 await self._async_execute_command(command)
         elif value is not None:
-            # 如果配置中指定了值，设置该属性�?
+            # 如果配置中指定了值，设置该属性值
             await self.async_set_attribute(attribute, value)
         else:
             # 默认行为：如果没有指定命令或值，记录警告
@@ -88,12 +88,12 @@ class MideaButtonEntity(MideaEntity, ButtonEntity):
 
     async def _async_execute_command(self, command: str) -> None:
         """Execute a special command."""
-        # 这里可以处理特殊的命令类�?
+        # 这里可以处理特殊的命令类型
         # 例如：重启、重置、测试等
         if command == "reset" or command == "restart":
             # 可以在这里实现重置或重启逻辑
             MideaLogger.debug(f"Executing {command} command for button {self._entity_key}")
         else:
-            # 对于其他命令，可以通过 coordinator 发�?
+            # 对于其他命令，可以通过 coordinator 发送
             await self.coordinator.async_send_command(0, command)
 

@@ -44,7 +44,7 @@ class MideaSwitchEntity(MideaEntity, SwitchEntity):
     """Midea switch entity."""
 
     def __init__(self, coordinator, device, manufacturer, rationale, entity_key, config):
-        # 自动判断是否为中央空调设备（T0x21�?
+        # 自动判断是否为中央空调设备（T0x21）
         self._is_central_ac = device.device_type == 0x21
         
         super().__init__(
@@ -86,13 +86,13 @@ class MideaSwitchEntity(MideaEntity, SwitchEntity):
             await self._async_set_status_on_off(attribute, False)
 
     async def _async_set_central_ac_switch_status(self, is_on: bool):
-        """设置中央空调开关设备的状�?""
+        """设置中央空调开关设备的状态"""
         # 从entity_key中提取endpoint ID
-        # entity_key格式: endpoint_1_OnOff -> 提取�?1
-        endpoint_id = 1  # 默认�?
+        # entity_key格式: endpoint_1_OnOff -> 提取出 1
+        endpoint_id = 1  # 默认值
         if self._entity_key.startswith("endpoint_"):
             try:
-                # 提取endpoint_后面的数�?
+                # 提取endpoint_后面的数字
                 parts = self._entity_key.split("_")
                 if len(parts) >= 2:
                     endpoint_id = int(parts[1])

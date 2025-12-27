@@ -10,11 +10,11 @@ class LuaRuntime:
     def __init__(self, file):
         self._runtimes = lupa.lua51.LuaRuntime()
 
-        # 设置Lua路径，包含cjson.lua和bit.lua的目�?
+        # 设置Lua路径，包含cjson.lua和bit.lua的目录
         lua_dir = os.path.dirname(os.path.abspath(file))
         self._runtimes.execute(f'package.path = package.path .. ";{lua_dir}/?.lua"')
 
-        # 加载必需的Lua�?
+        # 加载必需的Lua库
         try:
             self._runtimes.execute('require "cjson"')
         except Exception as e:
@@ -77,21 +77,21 @@ class MideaCodec(LuaRuntime):
         query_dict = self._build_base_dict()
         query_dict["control"] = {} if append is None else append
         query_dict["status"] = {} if status is None else status
-        # 针对T0xD9复式洗衣机特殊处�?
+        # 针对T0xD9复式洗衣机特殊处理
         if self._device_type == "T0xD9":
             control_keys = list(append.keys())
             if len(control_keys) > 0:
-                # 从第一个键名中提取前缀，例如从 'db_power' 中提�?'db'
+                # 从第一个键名中提取前缀，例如从 'db_power' 中提取 'db'
                 first_key = control_keys[0]
                 prefix = first_key.split("_")[0]
                 query_dict["control"]["bucket"] = prefix
             else:
                 query_dict["control"]["bucket"] = "db"
-        # 针对T0x9C集成灶特殊处�?
+        # 针对T0x9C集成灶特殊处理
         elif self._device_type == "T0x9C":
             control_keys = list(append.keys())
             if len(control_keys) > 0:
-                # 从第一个键名中提取前缀，例如从 'db_power' 中提�?'db'
+                # 从第一个键名中提取前缀，例如从 'db_power' 中提取 'db'
                 first_key = control_keys[0]
                 prefix = first_key.split("_")[0]
             else:

@@ -290,7 +290,7 @@ class MeijuCloud(MideaCloud):
         return None
 
     async def list_appliances(self, home_id) -> dict | None:
-        # 存储当前使用�?homegroupId 用于后续的中央空调控�?
+        # 存储当前使用的 homegroupId 用于后续的中央空调控制
         self._homegroup_id = str(home_id)
         data = {
             "homegroupId": home_id
@@ -389,7 +389,7 @@ class MeijuCloud(MideaCloud):
             }
         }
         
-        # 构建完整的请求数�?
+        # 构建完整的请求数据
         request_data = {
             "applianceCode": str(appliance_code),
             "modelId": modelid,
@@ -507,7 +507,7 @@ class MeijuCloud(MideaCloud):
             model_number: str | None,
             manufacturer_code: str = "0000",
     ):
-        # 构建 applianceList，根据传入的参数动态生�?
+        # 构建 applianceList，根据传入的参数动态生成
         appliance_info = {
             "appModel": sn8,
             "appEnterprise": manufacturer_code,
@@ -530,13 +530,13 @@ class MeijuCloud(MideaCloud):
             endpoint="/v1/plugin/update/getPluginV3",
             data=data
         ):
-            # response �?{"list": [...]}
+            # response 是 {"list": [...]}
             plugin_list = response.get("list", [])
             if not plugin_list:
                 MideaLogger.warning(f"No plugin found for device type 0x{device_type:02X}, sn: {sn}")
                 return None
             
-            # 找到匹配的设备（优先匹配 applianceCode，其次匹�?appType�?
+            # 找到匹配的设备（优先匹配 applianceCode，其次匹配 appType）
             matched_plugin = None
             # 首先尝试精确匹配 applianceCode
             for plugin in plugin_list:
@@ -544,7 +544,7 @@ class MeijuCloud(MideaCloud):
                     matched_plugin = plugin
                     break
             
-            # 如果没有精确匹配，使用第一个匹�?appType �?
+            # 如果没有精确匹配，使用第一个匹配 appType 的
             if not matched_plugin:
                 for plugin in plugin_list:
                     if plugin.get("appType") == f"0x{device_type:02X}":

@@ -19,20 +19,20 @@ DEVICE_MAPPING = {
             Platform.SELECT: {
                 "warm_target_temp": {
                     "options": {
-                        "45â„?: {"warm_target_temp": "45"},
-                        "55â„?: {"warm_target_temp": "55"},
-                        "65â„?: {"warm_target_temp": "65"},
-                        "75â„?: {"warm_target_temp": "75"},
-                        "85â„?: {"warm_target_temp": "85"}
+                        "45â„ƒ": {"warm_target_temp": "45"},
+                        "55â„ƒ": {"warm_target_temp": "55"},
+                        "65â„ƒ": {"warm_target_temp": "65"},
+                        "75â„ƒ": {"warm_target_temp": "75"},
+                        "85â„ƒ": {"warm_target_temp": "85"}
                     }
                 },
                 "boil_target_temp": {
                     "options": {
-                        "45â„?: {"boil_target_temp": "45"},
-                        "55â„?: {"boil_target_temp": "55"},
-                        "65â„?: {"boil_target_temp": "65"},
-                        "75â„?: {"boil_target_temp": "75"},
-                        "85â„?: {"boil_target_temp": "85"}
+                        "45â„ƒ": {"boil_target_temp": "45"},
+                        "55â„ƒ": {"boil_target_temp": "55"},
+                        "65â„ƒ": {"boil_target_temp": "65"},
+                        "75â„ƒ": {"boil_target_temp": "75"},
+                        "85â„ƒ": {"boil_target_temp": "85"}
                     }
                 }
             },

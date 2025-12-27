@@ -122,6 +122,23 @@
     }
   },
   "entity": {
+    "button": {
+      "light_off": {
+        "name": "Light off"
+      },
+      "light_on": {
+        "name": "Light on"
+      },
+      "left_stove_off": {
+        "name": "Left stove off"
+      },
+      "right_stove_off": {
+        "name": "Right stove off"
+      },
+      "middle_stove_off": {
+        "name": "Middle stove off"
+      }
+    },
     "binary_sensor": {
       "heating_work": {
         "name": "Heating Work Status"
@@ -377,6 +394,9 @@
       },
       "electric_heater": {
         "name": "Electric Heater"
+      },
+      "heating": {
+        "name": "Heating"
       }
     },
     "humidifier": {
@@ -388,6 +408,15 @@
       }
     },
     "select": {
+      "updown": {
+        "name": "Running Status"
+      },
+      "ud_swing_angle": {
+        "name": "UD Swing Angle"
+      },
+      "lr_swing_angle": {
+        "name": "LR Swing Angle"
+      },
       "follow_body_sense": {
         "name": "Follow Body Sense"
       },
@@ -445,8 +474,12 @@
       "db_detergent": {
         "name": "DB Detergent"
       },
-      "db_location": {
-        "name": "DB Location"
+      "db_location_selection": {
+        "name": "Bucket Selection",
+        "state": {
+          "left": "Left Bucket",
+          "right": "Right Bucket"
+        }
       },
       "db_position": {
         "name": "DB Position"
@@ -509,7 +542,12 @@
         "name": "Gesture Function Type"
       },
       "humidity_mode": {
-        "name": "Humidity Mode"
+        "name": "Humidity Mode",
+        "state": {
+          "manual": "manual",
+          "moist_skin": "moist skin",
+          "sleep": "sleep"
+        }
       },
       "icea_bar_function_switch": {
         "name": "Icea Bar Function Switch"
@@ -594,10 +632,10 @@
           "wash_drying_60": "wash drying 60min",
           "self_wash_5": "self wash 5min",
           "fast_wash_min": "fast wash(min)",
-          "mixed_wash_min": "mixed wash（min�?,
-          "dehydration_min": "dehydration（min�?,
-          "self_wash_min": "self wash（min�?,
-          "baby_clothes_min": "baby clothes（min�?,
+          "mixed_wash_min": "mixed wash（min）",
+          "dehydration_min": "dehydration（min）",
+          "self_wash_min": "self wash（min）",
+          "baby_clothes_min": "baby clothes（min）",
           "diy0": "diy0",
           "diy1": "diy1",
           "diy2": "diy2",
@@ -695,10 +733,24 @@
         "name": "Water Level"
       },
       "wind_gear": {
-        "name": "Wind Gear"
+        "name": "Wind Gear",
+        "state": {
+          "low": "low",
+          "medium": "medium",
+          "high": "high",
+          "auto": "auto",
+          "invalid": "invalid"
+        }
       },
       "wind_speed": {
-        "name": "Wind Speed"
+        "name": "Wind Speed",
+        "state": {
+          "low": "low",
+          "medium": "medium",
+          "high": "high",
+          "auto": "auto",
+          "invalid": "invalid"
+        }
       },
       "work_mode": {
         "name": "Work Mode"
@@ -825,6 +877,21 @@
       },
       "wind_pressure": {
         "name": "Wind Pressure"
+      },
+      "hot_style": {
+        "name": "Heating Style"
+      },
+      "bash_mode": {
+        "name": "Bath Mode"
+      },
+      "heating_mode": {
+        "name": "Heating Mode"
+      },
+      "three_way_mode": {
+        "name": "Three Way Valve Mode"
+      },
+      "heating_unit_type": {
+        "name": "Heating Unit Type"
       }
     },
     "sensor": {
@@ -1452,6 +1519,63 @@
       "in_temperature": {
         "name": "In Temperature"
       },
+      "out_temperature": {
+        "name": "Out Temperature"
+      },
+      "bash_temperature": {
+        "name": "Bath Temperature"
+      },
+      "bash_target_temperature": {
+        "name": "Bath Target Temperature"
+      },
+      "heating_temperature": {
+        "name": "Heating Temperature"
+      },
+      "heating_target_temperature": {
+        "name": "Heating Target Temperature"
+      },
+      "heating_gap_temperature": {
+        "name": "Heating Gap Temperature"
+      },
+      "user_mode_target_temperature": {
+        "name": "User Mode Target Temperature"
+      },
+      "activity_mode_target_temperature": {
+        "name": "Activity Mode Target Temperature"
+      },
+      "sleep_mode_target_temperature": {
+        "name": "Sleep Mode Target Temperature"
+      },
+      "rated_power": {
+        "name": "Rated Power"
+      },
+      "current_power": {
+        "name": "Current Power"
+      },
+      "flow_volume": {
+        "name": "Flow Volume"
+      },
+      "bash_mode": {
+        "name": "Bath Mode"
+      },
+      "heating_mode": {
+        "name": "Heating Mode"
+      },
+      "hot_style": {
+        "name": "Heating Style"
+      },
+      "bash_function": {
+        "name": "Bath Function"
+      },
+      "three_way_mode": {
+        "name": "Three Way Valve Mode"
+      },
+      "heating_unit_type": {
+        "name": "Heating Unit Type"
+      },
+      "light_gear": {
+        "name": "Screen Brightness"
+      },
       "mg_remain": {
         "name": "Mg Remain"
       },
@@ -1592,6 +1716,9 @@
       },
       "ud_swing_angle": {
         "name": "UD Swing Angle"
+      },
+      "lr_swing_angle": {
+        "name": "LR Swing Angle"
       },
       "lr_diy_down_percent": {
         "name": "LR DIY Down Percent"
@@ -1783,6 +1910,39 @@
       }
     },
     "number": {
+      "light_brightness": {
+        "name": "Light Brightness"
+      },
+      "bash_target_temperature": {
+        "name": "Bath Target Temperature"
+      },
+      "bash_gap_temperature": {
+        "name": "Bath Gap Temperature"
+      },
+      "heating_target_temperature": {
+        "name": "Heating Target Temperature"
+      },
+      "heating_gap_temperature": {
+        "name": "Heating Gap Temperature"
+      },
+      "last_time": {
+        "name": "Continuous Heating Time"
+      },
+      "user_mode_target_temperature": {
+        "name": "User Mode Target Temperature"
+      },
+      "activity_mode_target_temperature": {
+        "name": "Activity Mode Target Temperature"
+      },
+      "sleep_mode_target_temperature": {
+        "name": "Sleep Mode Target Temperature"
+      },
+      "light_gear": {
+        "name": "Screen Brightness"
+      },
+      "laundry_height": {
+        "name": "Laundry Height"
+      },
       "water_quality": {
         "name": "Water Quality"
       },
@@ -1838,6 +1998,12 @@
       }
     },
     "switch": {
+      "laundry": {
+        "name": "One Key Laundry"
+      },
+      "offline_voice_function": {
+        "name": "Offline Voice"
+      },
       "winter_mode": {
         "name": "Winter Mode"
       },
@@ -2083,6 +2249,18 @@
       },
       "buzzer": {
         "name": "Buzzer"
+      },
+      "pump": {
+        "name": "Pump"
+      },
+      "wait_power": {
+        "name": "Standby"
+      },
+      "cold_power": {
+        "name": "Antifreeze"
+      },
+      "sleep_power": {
+        "name": "Sleep"
       },
       "change_litre_switch": {
         "name": "Change Litre Switch"
@@ -2735,6 +2913,9 @@
       "endpoint_8_onoff": {
         "name": "Button 8"
       },
+      "wisdom_wind": {
+        "name": "Wisdom Wind"
+      },
       "work_switch": {
         "name": "Work Switch"
       },
@@ -2749,6 +2930,39 @@
       },
       "forcetbh_state": {
         "name": "Force Standby"
+      },
+	  "manul_humi": {
+        "name": "humidification"
+      },
+      "manul_humi_value": {
+        "name": "Set humidity"
+      },
+      "down_wind_left_switch": {
+        "name": "Down Wind Left Switch"
+      },
+      "down_wind_right_switch": {
+        "name": "Down Wind Right Switch"
+      },
+      "disinfect": {
+        "name": "Disinfect"
+      },
+      "remove_arofene": {
+        "name": "Remove Arofene"
+      },
+      "remove_peculiar_smell": {
+        "name": "Remove Peculiar Smell"
+      },
+      "auto_fresh_off_co2": {
+        "name": "Auto Fresh Off Co2"
+      },
+      "comfort_fresh_air": {
+        "name": "Comfort Fresh Air"
+      },
+      "elec_dust_remove": {
+        "name": "Elec Dust Remove"
+      },
+      "air_exhaust": {
+        "name": "Air Exhaust"
       }
     }
   }

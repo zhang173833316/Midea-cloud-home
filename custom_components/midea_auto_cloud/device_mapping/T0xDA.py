@@ -118,7 +118,7 @@ DEVICE_MAPPING = {
                         "记忆": {"program": "memory"},
                         "童装": {"program": "child"},
                         "强洗": {"program": "strong_wash"},
-                        "桶自�?: {"program": "bucket_self_clean"},
+                        "桶自洁": {"program": "bucket_self_clean"},
                     }
                 },
             },

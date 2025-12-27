@@ -45,7 +45,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             try:
                 if await cloud.login():
 
-                    # 保存云实例和用户输入，用于后续步�?
+                    # 保存云实例和用户输入，用于后续步骤
                     self._cloud = cloud
                     self._user_input = user_input
                     
@@ -97,16 +97,16 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         home_options = {}
         for home_id, home_info in self._homes.items():
             _LOGGER.debug(f"Processing home_id: {home_id}, home_info: {home_info}, type: {type(home_info)}")
-            # 确保home_id是字符串，因为multi_select需要字符串�?
+            # 确保home_id是字符串，因为multi_select需要字符串键
             home_id_str = str(home_id)
             if isinstance(home_info, dict):
                 home_name = home_info.get("name", f"家庭 {home_id}")
             else:
-                # 如果home_info是字符串，直接使�?
+                # 如果home_info是字符串，直接使用
                 home_name = str(home_info) if home_info else f"家庭 {home_id}"
             home_options[home_id_str] = home_name
         
-        # 默认全�?
+        # 默认全选
         default_selected = list(home_options.keys())
         _LOGGER.debug(f"Home options: {home_options}")
         _LOGGER.debug(f"Default selected: {default_selected}")
@@ -147,7 +147,7 @@ class OptionsFlowHandler(config_entries.OptionsFlow):
         errors: dict[str, str] = {}
         
         if user_input is not None:
-            # 验证新密�?
+            # 验证新密码
             cloud = get_midea_cloud(
                 session=async_create_clientsession(self.hass),
                 cloud_name=CONF_SERVERS[user_input[CONF_SERVER]],

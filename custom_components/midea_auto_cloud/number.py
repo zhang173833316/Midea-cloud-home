@@ -58,7 +58,7 @@ class MideaNumberEntity(MideaEntity, NumberEntity):
             rationale=rationale,
             config=config,
         )
-        # 从配置中读取数值范围，如果没有则使用默认�?
+        # 从配置中读取数值范围，如果没有则使用默认值
         self._min_value = self._config.get("min", 0.0)
         self._max_value = self._config.get("max", 100.0)
         self._step = self._config.get("step", 1.0)
@@ -74,7 +74,7 @@ class MideaNumberEntity(MideaEntity, NumberEntity):
         if value is None:
             return None
             
-        # 确保返回的是数值类�?
+        # 确保返回的是数值类型
         try:
             return float(value)
         except (ValueError, TypeError):
@@ -105,13 +105,13 @@ class MideaNumberEntity(MideaEntity, NumberEntity):
 
     async def async_set_native_value(self, value: float) -> None:
         """Set the value of the number entity."""
-        # 确保值在有效范围�?
+        # 确保值在有效范围内
         value = max(self._min_value, min(self._max_value, value))
         
         # Use attribute from config if available, otherwise fall back to entity_key
         attribute = self._config.get("attribute", self._entity_key)
         
-        # 如果配置中指定了转换函数或映射，可以在这里处�?
-        # 否则直接设置属性�?
+        # 如果配置中指定了转换函数或映射，可以在这里处理
+        # 否则直接设置属性值
         await self.async_set_attribute(attribute, str(int(value)))
 

@@ -40,42 +40,42 @@ DEVICE_MAPPING = {
                 },
                 "b6_gear": {
                     "options": {
-                        "å…?: {"b6_gear": "0"},
-                        "ä½?: {"b6_gear": "1"},
-                        "ä¸?: {"b6_gear": "2"},
-                        "é«?: {"b6_gear": "3"},
+                        "å…³": {"b6_gear": "0"},
+                        "ä½Ž": {"b6_gear": "1"},
+                        "ä¸­": {"b6_gear": "2"},
+                        "é«˜": {"b6_gear": "3"},
                         "çˆ†ç‚’": {"b6_gear": "4"}
                     }
                 },
                 "b6_power_on_light": {
                     "options": {
-                        "å…?: {"b6_power_on_light": "off", "b6_setting": "power_on_light"},
+                        "å…³": {"b6_power_on_light": "off", "b6_setting": "power_on_light"},
                         "å¼€": {"b6_power_on_light": "on", "b6_setting": "power_on_light"}
                     }
                 },
                 "b6_lock": {
                     "options": {
-                        "å…?: {"b6_lock": "off", "b6_setting": "lock"},
+                        "å…³": {"b6_lock": "off", "b6_setting": "lock"},
                         "å¼€": {"b6_lock": "on", "b6_setting": "lock"}
                     }
                 },
                 "b6_smoke_stove_linkage_gear": {
                     "options": {
-                        "1æ¡?: {"b6_smoke_stove_linkage_gear": 1, "b6_setting": "smoke_stove_linkage"},
-                        "2æ¡?: {"b6_smoke_stove_linkage_gear": 2, "b6_setting": "smoke_stove_linkage"},
-                        "3æ¡?: {"b6_smoke_stove_linkage_gear": 3, "b6_setting": "smoke_stove_linkage"},
+                        "1æ¡£": {"b6_smoke_stove_linkage_gear": 1, "b6_setting": "smoke_stove_linkage"},
+                        "2æ¡£": {"b6_smoke_stove_linkage_gear": 2, "b6_setting": "smoke_stove_linkage"},
+                        "3æ¡£": {"b6_smoke_stove_linkage_gear": 3, "b6_setting": "smoke_stove_linkage"},
                     }
                 },
                 "b6_delay_gear_linkage_gear": {
                     "options": {
-                        "1æ¡?: {"b6_delay_gear_linkage_gear": 1, "b6_setting": "delay_gear_linkage"},
-                        "2æ¡?: {"b6_delay_gear_linkage_gear": 2, "b6_setting": "delay_gear_linkage"},
-                        "3æ¡?: {"b6_delay_gear_linkage_gear": 3, "b6_setting": "delay_gear_linkage"},
+                        "1æ¡£": {"b6_delay_gear_linkage_gear": 1, "b6_setting": "delay_gear_linkage"},
+                        "2æ¡£": {"b6_delay_gear_linkage_gear": 2, "b6_setting": "delay_gear_linkage"},
+                        "3æ¡£": {"b6_delay_gear_linkage_gear": 3, "b6_setting": "delay_gear_linkage"},
                     }
                 },
                 "b6_delay_time_value": {
                     "options": {
-                        "å…?: {"b6_delay_time": "off", "b6_setting": "delay_time"},
+                        "å…³": {"b6_delay_time": "off", "b6_setting": "delay_time"},
                         "1åˆ†é’Ÿ": {"b6_delay_time": "on", "b6_delay_time_value": 1, "b6_setting": "delay_time"},
                         "2åˆ†é’Ÿ": {"b6_delay_time": "on", "b6_delay_time_value": 2, "b6_setting": "delay_time"},
                         "3åˆ†é’Ÿ": {"b6_delay_time": "on", "b6_delay_time_value": 3, "b6_setting": "delay_time"},

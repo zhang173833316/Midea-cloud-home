@@ -35,7 +35,7 @@ async def async_setup_entry(
         rationale = config.get("rationale")
         coordinator = coordinator_map.get(device_id)
         device = coordinator.device if coordinator else None
-        # 连接状态实�?
+        # 连接状态实体
         if coordinator and device:
             devs.append(MideaDeviceStatusSensorEntity(coordinator, device, manufacturer, rationale, "Status", {}))
         for entity_key, ecfg in entities_cfg.items():

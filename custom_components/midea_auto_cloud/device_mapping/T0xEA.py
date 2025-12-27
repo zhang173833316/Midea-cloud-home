@@ -66,8 +66,8 @@ DEVICE_MAPPING = {
             Platform.SELECT: {
                 "mode": {
                     "options": {
-                        "精华�?: {"mode": "essence_rice", "work_status": "cooking"},
-                        "稀�?: {"mode": "gruel", "work_status": "cooking"},
+                        "精华饭": {"mode": "essence_rice", "work_status": "cooking"},
+                        "稀饭": {"mode": "gruel", "work_status": "cooking"},
                         "热饭": {"mode": "heat_rice", "work_status": "cooking"},
                         "煮粥": {"mode": "boil_congee", "work_status": "cooking"},
                         "煲汤": {"mode": "cook_soup", "work_status": "cooking"},
@@ -76,9 +76,9 @@ DEVICE_MAPPING = {
                 },
                 "rice_type": {
                     "options": {
-                        "�?: {"rice_type": "none"},
+                        "无": {"rice_type": "none"},
                         "东北大米": {"rice_type": "northeast"},
-                        "长粒�?: {"rice_type": "longrain"},
+                        "长粒米": {"rice_type": "longrain"},
                         "香米": {"rice_type": "fragrant"},
                         "五常大米": {"rice_type": "five"},
                     }
@@ -147,8 +147,8 @@ DEVICE_MAPPING = {
             Platform.SELECT: {
                 "mode": {
                     "options": {
-                        "精华�?: {"mode": "essence_rice", "work_status": "cooking"},
-                        "稀�?: {"mode": "gruel", "work_status": "cooking"},
+                        "精华饭": {"mode": "essence_rice", "work_status": "cooking"},
+                        "稀饭": {"mode": "gruel", "work_status": "cooking"},
                         "热饭": {"mode": "heat_rice", "work_status": "cooking"},
                         "煮粥": {"mode": "boil_congee", "work_status": "cooking"},
                         "煲汤": {"mode": "cook_soup", "work_status": "cooking"},
@@ -157,9 +157,9 @@ DEVICE_MAPPING = {
                 },
                 "rice_type": {
                     "options": {
-                        "�?: {"rice_type": "none"},
+                        "无": {"rice_type": "none"},
                         "东北大米": {"rice_type": "northeast"},
-                        "长粒�?: {"rice_type": "longrain"},
+                        "长粒米": {"rice_type": "longrain"},
                         "香米": {"rice_type": "fragrant"},
                         "五常大米": {"rice_type": "five"},
                     }

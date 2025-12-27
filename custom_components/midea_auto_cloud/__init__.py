@@ -61,12 +61,11 @@ PLATFORMS: list[Platform] = [
     Platform.LIGHT,
     Platform.HUMIDIFIER,
     Platform.NUMBER,
-    Platform.BUTTON,
-    Platform.LOCK
+    Platform.BUTTON
 ]
 
 async def import_module_async(module_name):
-    # 在线程池中执行导入操�?
+    # 在线程池中执行导入操作
     return await asyncio.to_thread(import_module, module_name, __package__)
 
 def get_sn8_used(hass: HomeAssistant, sn8):
@@ -96,13 +95,13 @@ async def load_device_config(hass: HomeAssistant, device_type, sn8):
     raw = await hass.async_add_executor_job(_ensure_dir_and_load, config_dir, config_file)
     json_data = {}
     # if isinstance(raw, dict) and len(raw) > 0:
-    #     # 兼容两种文件结构�?
+    #     # 兼容两种文件结构：
     #     # 1) { "<sn8>": { ...mapping... } }
-    #     # 2) { ...mapping... }（直接就是映射体�?
+    #     # 2) { ...mapping... }（直接就是映射体）
     #     if sn8 in raw:
     #         json_data = raw.get(sn8) or {}
     #     else:
-    #         # 如果像映射体（包�?entities/centralized 等关键字段），直接使�?
+    #         # 如果像映射体（包含 entities/centralized 等关键字段），直接使用
     #         if any(k in raw for k in ["entities", "centralized", "queries", "manufacturer"]):
     #             json_data = raw
     # if not json_data:
@@ -152,7 +151,7 @@ async def async_setup(hass: HomeAssistant, config: ConfigType):
     cjson = os.path.join(lua_path, "cjson.lua")
     bit = os.path.join(lua_path, "bit.lua")
 
-    # 只有文件不存在时才创�?
+    # 只有文件不存在时才创建
     if not os.path.exists(cjson):
         from .const import CJSON_LUA
         cjson_lua = base64.b64decode(CJSON_LUA.encode("utf-8")).decode("utf-8")
@@ -161,7 +160,7 @@ async def async_setup(hass: HomeAssistant, config: ConfigType):
                 fp.write(cjson_lua)
         except PermissionError as e:
             MideaLogger.error(f"Failed to create cjson.lua at {cjson}: {e}")
-            # 如果无法创建文件，尝试使用临时目�?
+            # 如果无法创建文件，尝试使用临时目录
             import tempfile
             temp_dir = tempfile.gettempdir()
             cjson = os.path.join(temp_dir, "cjson.lua")
@@ -177,7 +176,7 @@ async def async_setup(hass: HomeAssistant, config: ConfigType):
                 fp.write(bit_lua)
         except PermissionError as e:
             MideaLogger.error(f"Failed to create bit.lua at {bit}: {e}")
-            # 如果无法创建文件，尝试使用临时目�?
+            # 如果无法创建文件，尝试使用临时目录
             import tempfile
             temp_dir = tempfile.gettempdir()
             bit = os.path.join(temp_dir, "bit.lua")
@@ -205,7 +204,7 @@ async def async_setup_entry(hass: HomeAssistant, config_entry: ConfigEntry):
             MideaLogger.error("Midea cloud login failed")
             return False
 
-        # 拉取家庭与设备列�?
+        # 拉取家庭与设备列表
         try:
             homes = await cloud.list_home()
             if homes and len(homes) > 0:
@@ -218,7 +217,7 @@ async def async_setup_entry(hass: HomeAssistant, config_entry: ConfigEntry):
                 MideaLogger.debug(f"Selected homes from config: {selected_homes}")
                 MideaLogger.debug(f"Available homes keys: {list(homes.keys())}")
                 if not selected_homes:
-                    # 如果没有选择，默认使用所有家�?
+                    # 如果没有选择，默认使用所有家庭
                     home_ids = list(homes.keys())
                 else:
                     # 只处理用户选择的家庭，确保类型匹配
@@ -286,7 +285,7 @@ async def async_setup_entry(hass: HomeAssistant, config_entry: ConfigEntry):
                                 lua_file=file,
                                 cloud=cloud,
                             )
-                            # 加载并应用设备映射（queries/centralized/calculate），并预�?attributes �?
+                            # 加载并应用设备映射（queries/centralized/calculate），并预置 attributes 键
                             try:
                                 mapping = await load_device_config(
                                     hass,
@@ -309,7 +308,7 @@ async def async_setup_entry(hass: HomeAssistant, config_entry: ConfigEntry):
                             except Exception:
                                 pass
 
-                            # 预置 attributes：包�?centralized 里声明的所有键、entities 中使用到的所有属性键
+                            # 预置 attributes：包含 centralized 里声明的所有键、entities 中使用到的所有属性键
                             try:
                                 preset_keys = set(mapping.get("centralized", []))
                                 entities_cfg = (mapping.get("entities") or {})
@@ -320,7 +319,7 @@ async def async_setup_entry(hass: HomeAssistant, config_entry: ConfigEntry):
                                     for _, ecfg in platform_cfg.items():
                                         if not isinstance(ecfg, dict):
                                             continue
-                                        # 常见直接属性字�?
+                                        # 常见直接属性字段
                                         for k in [
                                             "power",
                                             "aux_heat",
@@ -352,7 +351,7 @@ async def async_setup_entry(hass: HomeAssistant, config_entry: ConfigEntry):
                                                     if isinstance(cond, dict):
                                                         for attr_name in cond.keys():
                                                             preset_keys.add(attr_name)
-                                # 传感�?开关等实体 key 本身也加入（�?key 即属性名�?
+                                # 传感器/开关等实体 key 本身也加入（其 key 即属性名）
                                 for platform_name, platform_cfg in entities_cfg.items():
                                     if not isinstance(platform_cfg, dict):
                                         continue
@@ -366,10 +365,13 @@ async def async_setup_entry(hass: HomeAssistant, config_entry: ConfigEntry):
                                     ]:
                                         for entity_key in platform_cfg.keys():
                                             preset_keys.add(entity_key)
-                                # 写入默认空�?
+                                # 写入默认空值
                                 for k in preset_keys:
                                     if k not in device.attributes:
                                         device.attributes[k] = None
+                                # 针对T0xD9复式洗衣机，设置默认的筒选择为左筒
+                                if device.device_type == 0xD9:
+                                    device.attributes["db_location_selection"] = "left"
                             except Exception:
                                 pass
 

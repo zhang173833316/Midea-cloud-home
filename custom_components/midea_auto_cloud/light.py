@@ -60,7 +60,7 @@ class MideaLightEntity(MideaEntity, LightEntity):
         self._key_oscillate = self._config.get("oscillate")
         self._key_directions = self._config.get("directions")
 
-        # 检测亮度配置类型：范围 [min, max] 或嵌套格�?{"brightness": [min, max]}
+        # 检测亮度配置类型：范围 [min, max] 或嵌套格式 {"brightness": [min, max]}
         self._brightness_is_range = False
         self._brightness_min = 0
         self._brightness_max = 255
@@ -74,7 +74,7 @@ class MideaLightEntity(MideaEntity, LightEntity):
                     self._brightness_min = self._key_brightness[0]
                     self._brightness_max = self._key_brightness[1]
             elif isinstance(self._key_brightness, dict):
-                # 嵌套格式：{"brightness": [min, max]} 或其他键�?
+                # 嵌套格式：{"brightness": [min, max]} 或其他键名
                 for key, value in self._key_brightness.items():
                     if isinstance(value, list) and len(value) == 2:
                         if isinstance(value[0], (int, float)) and isinstance(value[1], (int, float)):
@@ -84,10 +84,10 @@ class MideaLightEntity(MideaEntity, LightEntity):
                             self._brightness_key = key
                             break
 
-        # 检测色温配置类型：范围 [min_kelvin, max_kelvin] 或嵌套格�?{"color_temp": [min_kelvin, max_kelvin]}
+        # 检测色温配置类型：范围 [min_kelvin, max_kelvin] 或嵌套格式 {"color_temp": [min_kelvin, max_kelvin]}
         self._color_temp_is_range = False
-        self._color_temp_min = 2700  # 默认最小色温（暖白�?
-        self._color_temp_max = 6500  # 默认最大色温（冷白�?
+        self._color_temp_min = 2700  # 默认最小色温（暖白）
+        self._color_temp_max = 6500  # 默认最大色温（冷白）
         self._color_temp_key = "color_temp"  # 默认键名
         
         if self._key_color_temp:
@@ -98,7 +98,7 @@ class MideaLightEntity(MideaEntity, LightEntity):
                     self._color_temp_min = self._key_color_temp[0]
                     self._color_temp_max = self._key_color_temp[1]
             elif isinstance(self._key_color_temp, dict):
-                # 嵌套格式：{"color_temp": [min_kelvin, max_kelvin]} 或其他键�?
+                # 嵌套格式：{"color_temp": [min_kelvin, max_kelvin]} 或其他键名
                 for key, value in self._key_color_temp.items():
                     if isinstance(value, list) and len(value) == 2:
                         if isinstance(value[0], (int, float)) and isinstance(value[1], (int, float)):
@@ -117,7 +117,7 @@ class MideaLightEntity(MideaEntity, LightEntity):
 
     @property
     def supported_color_modes(self):
-        """返回支持的色彩模�?""
+        """返回支持的色彩模式"""
         modes = set()
         if self._brightness_is_range and self._color_temp_is_range:
             # 如果同时支持亮度和色温，优先支持色温模式（更高级的功能）
@@ -156,18 +156,18 @@ class MideaLightEntity(MideaEntity, LightEntity):
 
     @property
     def brightness(self):
-        """返回0-255范围内的亮度值（Home Assistant标准�?""
+        """返回0-255范围内的亮度值（Home Assistant标准）"""
         if not self._brightness_is_range:
             return None
             
-        # 范围模式：从设备属性读取亮度值，使用配置的键�?
+        # 范围模式：从设备属性读取亮度值，使用配置的键名
         brightness_value = self._get_nested_value(self._brightness_key)
         if brightness_value is not None:
             brightness_value = int(brightness_value)
         if brightness_value is not None:
-            # 如果配置是[0, 255]但实际设备范围是1-100，需要特殊处�?
+            # 如果配置是[0, 255]但实际设备范围是1-100，需要特殊处理
             if self._brightness_min == 0 and self._brightness_max == 255:
-                # 特殊处理：设�?-100范围映射到HA�?-255范围
+                # 特殊处理：设备1-100范围映射到HA的0-255范围
                 ha_brightness = round(brightness_value * 2.55)  # 1-100 -> 0-255
                 return max(1, min(255, ha_brightness))
             else:
@@ -180,19 +180,19 @@ class MideaLightEntity(MideaEntity, LightEntity):
 
     @property
     def color_temp_kelvin(self):
-        """返回当前色温值（开尔文�?""
+        """返回当前色温值（开尔文）"""
         if not self._color_temp_is_range:
             return None
             
-        # 从设备属性读取色温值（1-100范围�?
+        # 从设备属性读取色温值（1-100范围）
         color_temp_value = self._get_nested_value(self._color_temp_key)
         if color_temp_value is not None:
             try:
                 device_color_temp = int(color_temp_value)
-                # 将设备的1-100值转换为开尔文�?
+                # 将设备的1-100值转换为开尔文值
                 kelvin_range = self._color_temp_max - self._color_temp_min
                 if kelvin_range > 0:
-                    # �?-100范围映射回开尔文范围
+                    # 将1-100范围映射回开尔文范围
                     ha_color_temp = self._color_temp_min + device_color_temp * kelvin_range / 100
                     return round(ha_color_temp)
                 else:
@@ -203,14 +203,14 @@ class MideaLightEntity(MideaEntity, LightEntity):
 
     @property
     def min_color_temp_kelvin(self):
-        """返回支持的最小色温值（开尔文�?""
+        """返回支持的最小色温值（开尔文）"""
         if self._color_temp_is_range:
             return self._color_temp_min
         return None
 
     @property
     def max_color_temp_kelvin(self):
-        """返回支持的最大色温值（开尔文�?""
+        """返回支持的最大色温值（开尔文）"""
         if self._color_temp_is_range:
             return self._color_temp_max
         return None
@@ -233,7 +233,7 @@ class MideaLightEntity(MideaEntity, LightEntity):
         # 处理亮度设置 - 支持多种参数格式
         target_brightness = None
         if brightness is not None:
-            # Home Assistant标准�?-255范围
+            # Home Assistant标准：0-255范围
             target_brightness = brightness
         elif brightness_pct is not None:
             # 百分比格式：0-100范围，转换为0-255
@@ -243,12 +243,12 @@ class MideaLightEntity(MideaEntity, LightEntity):
             target_brightness = round(percentage * 255 / 100)
             
         if target_brightness is not None and self._key_brightness and self._brightness_is_range:
-            # 范围模式：将Home Assistant�?-255映射到设备范�?
-            # 如果配置是[0, 255]但实际设备范围是1-100，需要特殊处�?
+            # 范围模式：将Home Assistant的0-255映射到设备范围
+            # 如果配置是[0, 255]但实际设备范围是1-100，需要特殊处理
             if self._brightness_min == 0 and self._brightness_max == 255:
                 # 特殊处理：配置[0,255]但实际设备范围是1-100
                 device_brightness = round(target_brightness / 2.55)  # 0-255 -> 0-100
-                device_brightness = max(1, min(100, device_brightness))  # 确保�?-100范围�?
+                device_brightness = max(1, min(100, device_brightness))  # 确保在1-100范围内
             else:
                 # 正常范围映射
                 device_range = self._brightness_max - self._brightness_min
@@ -264,14 +264,14 @@ class MideaLightEntity(MideaEntity, LightEntity):
             # 确保色温值在配置的范围内
             ha_color_temp = max(self._color_temp_min, min(self._color_temp_max, color_temp_kelvin))
             
-            # 将开尔文值转换为设备范围�?-100�?
+            # 将开尔文值转换为设备范围（1-100）
             kelvin_range = self._color_temp_max - self._color_temp_min
             if kelvin_range > 0:
                 # 将开尔文值映射到1-100范围
                 device_color_temp = round((ha_color_temp - self._color_temp_min) * 100 / kelvin_range)
                 device_color_temp = max(0, min(100, device_color_temp))
             else:
-                device_color_temp = 50  # 默认中间�?
+                device_color_temp = 50  # 默认中间值
             
             new_status[self._color_temp_key] = str(device_color_temp)
                 

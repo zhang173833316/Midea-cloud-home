@@ -5,7 +5,7 @@ from homeassistant.components.switch import SwitchDeviceClass
 
 DEVICE_MAPPING = {
     "default": {
-        "manufacturer": "小天�?,
+        "manufacturer": "小天鹅",
         "rationale": ["off", "on"],
         "queries": [{}, {"query_type": "prevent_straight_wind"}],
         "centralized": [
@@ -205,12 +205,12 @@ DEVICE_MAPPING = {
                     "device_class": SwitchDeviceClass.SWITCH,
                 },
                 "prevent_straight_wind": {
-                    "name": "防直�?,
+                    "name": "防直吹",
                     "device_class": SwitchDeviceClass.SWITCH,
                     "rationale": [1, 2]
                 },
                 "aux_heat": {
-                    "name": "电辅�?,
+                    "name": "电辅热",
                     "device_class": SwitchDeviceClass.SWITCH,
                 }
             },

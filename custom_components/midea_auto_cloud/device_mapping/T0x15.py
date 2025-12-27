@@ -43,8 +43,8 @@ DEVICE_MAPPING = {
                         "取消": {"work_mode": "0", "work_switch": "cancel"},
                         "烧水": {"work_mode": "1", "work_switch": "start"},
                         "除氯": {"work_mode": "2", "work_switch": "start"},
-                        "花草�?: {"work_mode": "4", "work_switch": "start"},
-                        "养生�?: {"work_mode": "5", "work_switch": "start"},
+                        "花草茶": {"work_mode": "4", "work_switch": "start"},
+                        "养生汤": {"work_mode": "5", "work_switch": "start"},
                     }
                 }
             },

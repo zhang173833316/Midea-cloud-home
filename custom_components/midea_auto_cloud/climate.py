@@ -23,7 +23,7 @@ async def async_setup_entry(
     async_add_entities: AddEntitiesCallback,
 ) -> None:
     """Set up climate entities for Midea devices."""
-    # 账号�?entry：从 __init__ 写入�?accounts 桶加载设备和协调�?
+    # 账号型 entry：从 __init__ 写入的 accounts 桶加载设备和协调器
     account_bucket = hass.data.get(DOMAIN, {}).get("accounts", {}).get(config_entry.entry_id)
     if not account_bucket:
         async_add_entities([])
@@ -51,7 +51,7 @@ async def async_setup_entry(
 
 class MideaClimateEntity(MideaEntity, ClimateEntity):
     def __init__(self, coordinator, device, manufacturer, rationale, entity_key, config):
-        # 自动判断是否为中央空调设备（T0x21�?
+        # 自动判断是否为中央空调设备（T0x21）
         self._is_central_ac = device.device_type == 0x21
 
         super().__init__(
@@ -247,7 +247,7 @@ class MideaClimateEntity(MideaEntity, ClimateEntity):
     def swing_mode(self):
         if self._is_central_ac:
             extflag = self._get_nested_value("extflag") or "0"
-            # extflag: 4=摇摆, 6=电辅�?摇摆
+            # extflag: 4=摇摆, 6=电辅热+摇摆
             if extflag in ["4", "6"]:
                 return "on"
             return "off"
@@ -337,7 +337,7 @@ class MideaClimateEntity(MideaEntity, ClimateEntity):
             new_status = self._key_preset_modes.get(preset_mode)
             await self.async_set_attributes(new_status)
 
-    async def async_set_hvac_mode(self, hvac_mode: str):
+    async def async_set_hvac_mode(self, hvac_mode: HVACMode):
         if self._is_central_ac:
             run_mode = self._key_hvac_modes.get(hvac_mode)
             await self.coordinator.async_send_central_ac_control(run_mode)
@@ -350,13 +350,13 @@ class MideaClimateEntity(MideaEntity, ClimateEntity):
             current_extflag = self._get_nested_value("extflag") or "0"
             
             if swing_mode == "on":
-                # 开启摆风：如果当前有电辅热(2)，则设为6(电辅�?摆风)，否则设�?(摆风)
+                # 开启摆风：如果当前有电辅热(2)，则设为6(电辅热+摆风)，否则设为4(摆风)
                 if current_extflag == "2":
-                    new_extflag = "6"  # 电辅�?摆风
+                    new_extflag = "6"  # 电辅热+摆风
                 else:
-                    new_extflag = "4"  # 仅摆�?
+                    new_extflag = "4"  # 仅摆风
             else:
-                # 关闭摆风：如果当前是6(电辅�?摆风)，则设为2(仅电辅热)，否则设�?(关闭)
+                # 关闭摆风：如果当前是6(电辅热+摆风)，则设为2(仅电辅热)，否则设为0(关闭)
                 if current_extflag == "6":
                     new_extflag = "2"  # 仅电辅热
                 else:
