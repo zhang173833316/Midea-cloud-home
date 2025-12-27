@@ -8,7 +8,7 @@
 
 ### 报告问题
 
-如果您在项目中遇到错误，请在 GitHub 上[报告问题](https://github.com/sususweet/midea_auto_cloud/issues/new/)，并提供关于错误的详细信息，包括复现步骤、 debug 级日志以及错误出现的时间。
+如果您在项目中遇到错误，请在 GitHub 上[报告问题](https://github.com/sususweet/midea_cloud_home/issues/new/)，并提供关于错误的详细信息，包括复现步骤、 debug 级日志以及错误出现的时间。
 
 集成开启 debug 级日志的[方法](https://www.home-assistant.io/integrations/logger/#log-filters)：
 
@@ -23,7 +23,7 @@ logger:
 
 ### 建议增强功能
 
-如果您有增强或新功能的想法，欢迎您在 GitHub 讨论区[创建想法](https://github.com/sususweet/midea_auto_cloud/discussions/new?category=ideas) 。我们期待您的建议！
+如果您有增强或新功能的想法，欢迎您在 GitHub 讨论区[创建想法](https://github.com/sususweet/midea_cloud_home/discussions/new?category=ideas) 。我们期待您的建议！
 
 ### 贡献代码
 
@@ -50,7 +50,7 @@ logger:
 
 着重关注Device type、Subtype这两个字段，这是后续获得设备控制对应lua文件的基础。
 
-4. 进入Homeassistant的安装目录，在`.storage/midea_auto_cloud/lua/`目录下找到T_0000_`Device type`_`Subtype`_***.lua文件，例如上面干衣机设备的lua文件是： T_0000_DC_12852_2021121701.lua。
+4. 进入Homeassistant的安装目录，在`.storage/midea_cloud_home/lua/`目录下找到T_0000_`Device type`_`Subtype`_***.lua文件，例如上面干衣机设备的lua文件是： T_0000_DC_12852_2021121701.lua。
 
 5. 可用人工分析或者AI分析的方法解析lua文件，结合美的官方APP的控制界面，提取出需要控制的设备属性，把修改合并到`device_mapping`中对应设备`Device type`的py文件中。
 
@@ -118,6 +118,6 @@ footer ：（可选）关联的 issue 或 pull request 编号。
 
 ## 获取帮助
 
-如果您需要帮助或有疑问，可在 GitHub 的[讨论区](https://github.com/sususweet/midea_auto_cloud/discussions/)询问。
+如果您需要帮助或有疑问，可在 GitHub 的[讨论区](https://github.com/sususweet/midea_cloud_home/discussions/)询问。
 
 您还可以联系 sususweetcandy@qq.com

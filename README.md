@@ -1,4 +1,4 @@
-# Midea Auto Cloud
+# Midea Cloud Home
 
 [![hacs_badge](https://img.shields.io/badge/HACS-Default-orange.svg)](https://github.com/hacs/integration)
 [![Stable](https://img.shields.io/github/v/release/sususweet/midea-meiju-codec)](https://github.com/sususweet/midea-meiju-codec/releases/latest)
@@ -62,7 +62,7 @@ Collaboration method: After adding this plugin, find devices that are not correc
 
 Expand the `Attributes` card below and submit these fields with the issue. Pay special attention to the `Device type` and `Subtype` fields, as these are the basis for obtaining the corresponding lua files for device control.
 
-Then go to the Home Assistant installation directory, find the device's corresponding T_0000_`Device type`_`Subtype`_***.lua file in the `.storage/midea_auto_cloud/lua/` directory and `zip` file in the `.storage/midea_auto_cloud/plugin/` directory, and wait for adaptation.
+Then go to the Home Assistant installation directory, find the device's corresponding T_0000_`Device type`_`Subtype`_***.lua file in the `.storage/midea_cloud_home/lua/` directory and `zip` file in the `.storage/midea_cloud_home/plugin/` directory, and wait for adaptation.
 
 ![img_1.png](./img/img_1.png)
 

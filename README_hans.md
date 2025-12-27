@@ -1,4 +1,4 @@
-# Midea Auto Cloud
+# Midea Cloud Home
 
 [![hacs_badge](https://img.shields.io/badge/HACS-Default-orange.svg)](https://github.com/hacs/integration)
 [![Stable](https://img.shields.io/github/v/release/sususweet/midea-meiju-codec)](https://github.com/sususweet/midea-meiju-codec/releases/latest)
@@ -62,7 +62,7 @@
 
 展开下面的`属性`卡片，把里面这些字段随issue提交。 着重关注Device type、Subtype这两个字段，这是后续获得设备控制对应lua文件的基础。
 
-再进入Homeassistant的安装目录， 在`.storage/midea_auto_cloud/lua/`目录下找到设备对应的T_0000_`Device type`_`Subtype`_***.lua文件，以及`.storage/midea_auto_cloud/plugin/`目录下的`zip`文件，等待适配就可以了。
+再进入Homeassistant的安装目录， 在`.storage/midea_cloud_home/lua/`目录下找到设备对应的T_0000_`Device type`_`Subtype`_***.lua文件，以及`.storage/midea_cloud_home/plugin/`目录下的`zip`文件，等待适配就可以了。
 
 ![img_1.png](./img/img_1.png)
 
