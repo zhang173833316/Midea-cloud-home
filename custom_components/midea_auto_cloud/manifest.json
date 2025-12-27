@@ -1,6 +1,6 @@
 {
-  "domain": "midea_auto_cloud",
-  "name": "Midea Auto Cloud",
+  "domain": "midea_cloud_home",
+  "name": "Midea Cloud Home",
   "codeowners": ["@sususweet"],
   "config_flow": true,
   "documentation": "https://github.com/sususweet/midea-meiju-codec#readme",
