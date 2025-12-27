@@ -1,6 +1,5 @@
 from homeassistant.const import Platform
 from homeassistant.components.binary_sensor import BinarySensorDeviceClass
-from homeassistant.components.lock import LockDeviceClass
 
 DEVICE_MAPPING = {
     "default": {
@@ -10,7 +9,7 @@ DEVICE_MAPPING = {
         "entities": {
             Platform.LOCK: {
                 "lock": {
-                    "device_class": LockDeviceClass.LOCK,
+                    "device_class": "lock",
                 },
             },
             Platform.BINARY_SENSOR: {
