@@ -66,7 +66,7 @@ class MideaLockEntity(MideaEntity, LockEntity):
         # Use attribute from config if available, otherwise fall back to entity_key
         attribute = self._config.get("attribute", self._entity_key)
         value = self.device_attributes.get(attribute)
-        MideaLogger.debug(f"Lock status check - Attribute: {attribute}, Value: {value}, Device ID: {self.device_id}")
+        MideaLogger.debug(f"Lock status check - Attribute: {attribute}, Value: {value}, Device ID: {self._device_id}")
         
         # Special handling for lock status
         if value is None:
@@ -91,13 +91,13 @@ class MideaLockEntity(MideaEntity, LockEntity):
     async def async_lock(self, **kwargs):
         """Lock the lock."""
         attribute = self._config.get("attribute", self._entity_key)
-        MideaLogger.debug(f"Lock command - Attribute: {attribute}, Device ID: {self.device_id}")
+        MideaLogger.debug(f"Lock command - Attribute: {attribute}, Device ID: {self._device_id}")
         await self._async_set_status_on_off(attribute, True)
 
     async def async_unlock(self, **kwargs):
         """Unlock the lock."""
         attribute = self._config.get("attribute", self._entity_key)
-        MideaLogger.debug(f"Unlock command - Attribute: {attribute}, Device ID: {self.device_id}")
+        MideaLogger.debug(f"Unlock command - Attribute: {attribute}, Device ID: {self._device_id}")
         await self._async_set_status_on_off(attribute, False)
 
     @property
